@@ -13,6 +13,7 @@
 		A34F787D26C4B37B00033ADE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A34F787C26C4B37B00033ADE /* Preview Assets.xcassets */; };
 		A34F788626C4B3A200033ADE /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34F788526C4B3A200033ADE /* Main.swift */; };
 		A34F788926C58F6C00033ADE /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34F788826C58F6C00033ADE /* Heap.swift */; };
+		A34F788C26C5AD4900033ADE /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34F788B26C5AD4900033ADE /* Node.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		A34F787E26C4B37B00033ADE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A34F788526C4B3A200033ADE /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		A34F788826C58F6C00033ADE /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
+		A34F788B26C5AD4900033ADE /* Node.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +42,6 @@
 		A34F786926C4B37900033ADE = {
 			isa = PBXGroup;
 			children = (
-				A34F788826C58F6C00033ADE /* Heap.swift */,
 				A34F787426C4B37900033ADE /* HuffmanCoder */,
 				A34F787326C4B37900033ADE /* Products */,
 			);
@@ -57,6 +58,8 @@
 		A34F787426C4B37900033ADE /* HuffmanCoder */ = {
 			isa = PBXGroup;
 			children = (
+				A34F788B26C5AD4900033ADE /* Node.swift */,
+				A34F788826C58F6C00033ADE /* Heap.swift */,
 				A34F787526C4B37900033ADE /* HuffmanCoderApp.swift */,
 				A34F787726C4B37900033ADE /* ContentView.swift */,
 				A34F787926C4B37B00033ADE /* Assets.xcassets */,
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A34F788626C4B3A200033ADE /* Main.swift in Sources */,
+				A34F788C26C5AD4900033ADE /* Node.swift in Sources */,
 				A34F787826C4B37900033ADE /* ContentView.swift in Sources */,
 				A34F787626C4B37900033ADE /* HuffmanCoderApp.swift in Sources */,
 				A34F788926C58F6C00033ADE /* Heap.swift in Sources */,

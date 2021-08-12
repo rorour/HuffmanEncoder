@@ -16,7 +16,8 @@ import SwiftUI
 //display key / tree
 //ui format
 //display bit counts for encoded versions
-//throw error for invalid character?
+//throw error for invalid character? -
+//both huffman and ascii dont invalid character handling beforehand
 
 struct ContentView: View {
     var body: some View {
