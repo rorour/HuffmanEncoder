@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+//todo
+//input text box
+//encode button
+//display utf original encoding
+//encoding algorithm
+//display encoded
+//display key / tree
+//ui format
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Main()
     }
 }
 
