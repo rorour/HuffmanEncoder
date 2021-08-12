@@ -55,7 +55,6 @@ struct Main: View {
             let binary_ascii_val = String(ascii_val, radix: 2)
             return_val.append(binary_ascii_val)
         }
-        
         return return_val
     }
     
