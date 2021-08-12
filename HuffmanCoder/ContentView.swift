@@ -7,6 +7,7 @@
 
 import SwiftUI
 //todo
+//only allow ascii values 0-127
 //input text box
 //encode button
 //display utf original encoding
@@ -14,6 +15,8 @@ import SwiftUI
 //display encoded
 //display key / tree
 //ui format
+//display bit counts for encoded versions
+//throw error for invalid character?
 
 struct ContentView: View {
     var body: some View {

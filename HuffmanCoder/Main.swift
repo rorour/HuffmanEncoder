@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Main: View {
     @State private var input = ""
-    @State private var utf_8_encoded = ""
+    @State private var ascii_encoded = ""
     @State private var huffman_encoded = ""
 
     var body: some View {
@@ -35,7 +35,7 @@ struct Main: View {
             
             Text(input)
             
-            Text(utf_8_encoded)
+            Text(ascii_encoded)
             
             Text(huffman_encoded)
         }
@@ -45,11 +45,18 @@ struct Main: View {
         //translate to utf 8
         huffman_encoded = huffman_encode(input)
         //encoding algorithm
-        utf_8_encoded = utf_8_encode(input)
+        ascii_encoded = ascii_encode(input)
     }
     
-    func utf_8_encode (_ input: String) -> String {
-        return "utf 8 encoded"
+    func ascii_encode (_ input: String) -> String {
+        var return_val = ""
+        for char in input {
+            guard let ascii_val = char.asciiValue else { return "Contains invalid character" }
+            let binary_ascii_val = String(ascii_val, radix: 2)
+            return_val.append(binary_ascii_val)
+        }
+        
+        return return_val
     }
     
     func huffman_encode(_ input: String) -> String {
