@@ -7,25 +7,22 @@
 
 import Foundation
 
-class Node {
+public class Node {
     var freq: Int = 0
     var char: Character? = nil
     var left_child: Node? = nil
     var right_child: Node? = nil
     var is_leaf: Bool {
         guard left_child == nil else {
-            print("test: node with freq \(freq) has left child")
             return false
         }
         guard right_child == nil else {
-            print("test: node with freq \(freq) has right child")
             return false
         }
-        print("test: node with freq \(freq) is leaf")
         return true
     }
     
-    init(freq: Int = 0, char: Character? = nil, left_child: Node? = nil, right_child: Node? = nil) {
+    public init(freq: Int = 0, char: Character? = nil, left_child: Node? = nil, right_child: Node? = nil) {
         self.char = char
         self.freq = freq
         self.left_child = left_child

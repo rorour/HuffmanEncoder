@@ -58,14 +58,13 @@
 		A34F787426C4B37900033ADE /* HuffmanCoder */ = {
 			isa = PBXGroup;
 			children = (
-				A34F788B26C5AD4900033ADE /* Node.swift */,
-				A34F788826C58F6C00033ADE /* Heap.swift */,
+				A34F788F26C5B14600033ADE /* Models */,
 				A34F787526C4B37900033ADE /* HuffmanCoderApp.swift */,
+				A34F788526C4B3A200033ADE /* Main.swift */,
 				A34F787726C4B37900033ADE /* ContentView.swift */,
 				A34F787926C4B37B00033ADE /* Assets.xcassets */,
 				A34F787E26C4B37B00033ADE /* Info.plist */,
 				A34F787B26C4B37B00033ADE /* Preview Content */,
-				A34F788526C4B3A200033ADE /* Main.swift */,
 			);
 			path = HuffmanCoder;
 			sourceTree = "<group>";
@@ -76,6 +75,15 @@
 				A34F787C26C4B37B00033ADE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A34F788F26C5B14600033ADE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A34F788B26C5AD4900033ADE /* Node.swift */,
+				A34F788826C58F6C00033ADE /* Heap.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
