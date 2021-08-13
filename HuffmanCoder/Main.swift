@@ -53,9 +53,6 @@ struct Main: View {
                         text: $input
                     )
                     .padding(5)
-//                    .placeholder(when: input.isEmpty) {
-//                            Text("Placeholder recreated").foregroundColor(.gray)
-//                    }
                     .frame(width: geometry.size.width * 0.9)
                     .foregroundColor(Color.text)
                     .autocapitalization(.none)
