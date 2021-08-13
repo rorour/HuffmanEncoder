@@ -7,56 +7,160 @@
 
 import SwiftUI
 
+extension Color {
+    static let background = Color.black
+    static let accent1 = Color.white
+    static let accent2 = Color.white.opacity(0.1)
+    static let accent3 = Color.white.opacity(0.15)
+    static let border = accent2
+    static let title = accent1
+    static let button = Color.white.opacity(0.4)
+    static let button_pressed = Color.white.opacity(0.6)
+    static let text = Color.white
+}
+
+struct EncodeButtonStyle: ButtonStyle {
+    func makeBody(configuration: Self.Configuration) -> some View {
+        configuration.label
+            .padding(5)
+            .foregroundColor(Color.black)
+            .background(RoundedRectangle(cornerRadius: 5)
+                            .fill(configuration.isPressed ? Color.button_pressed : Color.button)
+            )
+            .scaleEffect(configuration.isPressed ? 1.1 : 1.0)
+    }
+}
+
 struct Main: View {
     @State private var input = ""
     @State private var ascii_encoded = ""
     @State private var huffman_encoded = ""
-
+    @State private var huffman_code_key = ""
+    @State private var valid_input: Bool = true
+    
+    struct TextBoxView: View {
+        var title: String
+        var content: String
+        var geometry: GeometryProxy
+        var body: some View {
+            VStack(alignment: .leading) {
+                Text(title)
+                    .font(.footnote)
+                    .background(Color.accent3)
+                ScrollView {
+                    Text(content)
+                }
+                .frame(width: geometry.size.width * 0.9, height: 100, alignment: .leading)
+                .border(Color.border, width: 2)
+            }
+        }
+    }
+    
     var body: some View {
-        Text("This is the main screen")
-        
-        VStack {
-            HStack {
-                Spacer()
-                TextField(
+        GeometryReader { geometry in
+                        Color.background
+                            .ignoresSafeArea()
+            VStack {
+                Text("")
+                Text("Huffman Coder")
+                    .font(Font.custom("Helvetica", size: 40))
+                    .bold()
+                    .foregroundColor(Color.title)
+                Text("\n")
+                
+                HStack {
+                    Spacer()
+                    TextField(
                         "Enter the text you want to encode",
-                         text: $input
+                        text: $input
                     )
+                    .padding(5)
+//                    .placeholder(when: input.isEmpty) {
+//                            Text("Placeholder recreated").foregroundColor(.gray)
+//                    }
+                    .frame(width: geometry.size.width * 0.9)
+                    .foregroundColor(Color.text)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .border(Color(UIColor.separator))
-                    
-                Spacer()
+                    Spacer()
+                }
+                
+                HStack {
+                    Spacer()
+
+                    Button(action: process_input) {
+                        Text("Encode")
+                    }
+                    .buttonStyle(EncodeButtonStyle())
+                }
+                .frame(width: geometry.size.width * 0.9)
+
+                Text("")
+                
+                TextBoxView(title: "ASCII Encoding (\(ascii_encoded.count) bits):", content: ascii_encoded, geometry: geometry)
+                
+                TextBoxView(title: "Huffman Encoding (\(huffman_encoded.count) bits):", content: huffman_encoded, geometry: geometry)
+                
+                TextBoxView(title: "Huffman Codes", content: huffman_code_key, geometry: geometry)
+                
             }
-            
-            Button(action: process_input) {
-                Text("Encode")
-            }
-            
-            Text("Original Input:")
-            Text(input)
-            Text("ASCII:")
-            Text(ascii_encoded)
-            Text("Huffman:")
-            Text(huffman_encoded)
         }
     }
     
     func process_input() {
-        //display ascii
+        huffman_code_key = ""
+        guard input.count > 0 else {
+            ascii_encoded = ""
+            huffman_encoded = ""
+            return
+        }
         ascii_encoded = ascii_encode(input)
-        //encode with huffman and display
+        guard valid_input else { //if contains non-ascii character
+            huffman_encoded = ""
+            return
+        }
         huffman_encoded = huffman_encode(input)
     }
     
     func ascii_encode (_ input: String) -> String {
+        valid_input = true
         var ascii_representation = ""
         for char in input {
-            guard let ascii_val = char.asciiValue else { return "Contains invalid character" }
+            guard let ascii_val = char.asciiValue else {
+                valid_input = false
+                return "Error: Contains non-ASCII character"
+            }
             let binary_ascii_val = String(ascii_val, radix: 2)
             ascii_representation.append(binary_ascii_val)
         }
         return ascii_representation
+    }
+    
+    func huffman_encode(_ input: String) -> String {
+        let huffman_tree = create_huffman_tree(input: input)
+        //create key from huffman tree
+        var huffman_key: [Character: String] = [:]
+        if huffman_tree.is_leaf {
+            //if only one character, assign 0 as code
+            if let letter = huffman_tree.char {
+                huffman_key[letter] = "0"
+            }
+        } else {
+            get_huffman_codes(tree: huffman_tree, code_dict: &huffman_key)
+        }
+        
+        var encoded: String = ""
+        
+        for char in input {
+            encoded.append(huffman_key[char]!)
+        }
+        
+        //create key string
+        for key in huffman_key.keys {
+            huffman_code_key.append("\(key): \(huffman_key[key]!)\n")
+        }
+        return encoded
     }
     
     func get_input_frequency(input: String) -> [Node] {
@@ -94,35 +198,15 @@ struct Main: View {
         }
         //when there is one node, continue
         guard let huffman_tree = heap.dequeue() else {
-            print("something went wrong")
+            print("Error: No input found")
             return Node()
         }
         return huffman_tree
     }
     
-    func huffman_encode(_ input: String) -> String {
-        let huffman_tree = create_huffman_tree(input: input)
-        //create key from huffman tree
-        var huffman_key: [Character: String] = [:]
-        get_huffman_codes(tree: huffman_tree, code_dict: &huffman_key)
-        
-        print("got \(huffman_key.count) codes added")
-        print("printing huffman codes")
-        for key in huffman_key.keys {
-            print("\(key): \(huffman_key[key]!)")
-        }
-        
-        var encoded: String = ""
-        
-        for char in input {
-            encoded.append(huffman_key[char]!)
-        }
-        return encoded
-    }
-    
     func print_leaves(tree: Node, code: String = "") {
         if tree.is_leaf {
-            print("\(tree.char ?? "!") \(tree.freq) code: \(code)")
+            print("\(tree.char!) \(tree.freq) code: \(code)")
             return
         }
         if let left = tree.left_child {
@@ -136,9 +220,7 @@ struct Main: View {
     func get_huffman_codes(tree: Node, code: String = "", code_dict: inout [Character: String]) {
         //fill dictionary with huffman codes from tree
         if tree.is_leaf {
-            print("\(tree.char ?? "!") \(tree.freq) code: \(code)")
             code_dict[tree.char!] = code
-            print("added \(tree.char ?? "!") to code_dict")
             return
         }
         if let left = tree.left_child {
