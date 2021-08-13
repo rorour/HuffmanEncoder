@@ -50,6 +50,7 @@ struct Main: View {
                 ScrollView {
                     Text(content)
                 }
+                .padding(5)
                 .frame(width: geometry.size.width * 0.9, height: 100, alignment: .leading)
                 .border(Color.border, width: 2)
             }
@@ -102,7 +103,7 @@ struct Main: View {
                 
                 TextBoxView(title: "Huffman Encoding (\(huffman_encoded.count) bits):", content: huffman_encoded, geometry: geometry)
                 
-                TextBoxView(title: "Huffman Codes", content: huffman_code_key, geometry: geometry)
+                TextBoxView(title: "Huffman Code Key", content: huffman_code_key, geometry: geometry)
                 
             }
         }
