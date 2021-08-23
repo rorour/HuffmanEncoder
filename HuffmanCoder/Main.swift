@@ -45,13 +45,14 @@ struct Main: View {
                     .bold()
                     .foregroundColor(Color.title)
                 Text("\n")
-                
+
                 HStack {
                     Spacer()
                     TextField(
                         "Enter the text you want to encode",
                         text: $input
                     )
+                    
                     .padding(5)
                     .frame(width: geometry.size.width * 0.9)
                     .foregroundColor(Color.text)
@@ -101,12 +102,20 @@ struct Main: View {
     func ascii_encode (_ input: String) -> String {
         valid_input = true
         var ascii_representation = ""
+
         for char in input {
-            guard let ascii_val = char.asciiValue else {
-                valid_input = false
-                return "Error: Contains non-ASCII character"
+            var ascii_val = char.asciiValue
+            if ascii_val == nil {
+                if char == "“" || char == "”" {
+                    ascii_val = Character("\"").asciiValue
+                } else if char == "‘" || char == "’" {
+                    ascii_val = Character("\'").asciiValue
+                } else {
+                    valid_input = false
+                    return "Error: Contains non-ASCII character \(char)"
+                }
             }
-            let binary_ascii_val = String(ascii_val, radix: 2)
+            let binary_ascii_val = String(ascii_val!, radix: 2)
             ascii_representation.append(binary_ascii_val)
         }
         return ascii_representation
